@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Abbi ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/lucide-react@latest"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+        const { Heart, Stars } = lucide;
+
+        const ValentineProposal = () => {
+            const [answer, setAnswer] = useState(null);
+            const [noCount, setNoCount] = useState(0);
+            const [noButtonPosition, setNoButtonPosition] = useState({ top: 0, left: 0 });
+
+            const handleNoHover = () => {
+                const newTop = Math.random() * 300;
+                const newLeft = Math.random() * 300;
+                setNoButtonPosition({ top: newTop, left: newLeft });
+                setNoCount(noCount + 1);
+            };
+
+            const getNoButtonText = () => {
+                const texts = [
+                    "No",
+                    "Are you sure, Abbi?",
+                    "Really sure?",
+                    "Think again!",
+                    "Last chance!",
+                    "Surely not?",
+                    "You might regret this!",
+                    "Give it another thought!",
+                    "Are you absolutely sure?",
+                    "This could be a mistake!",
+                ];
+                return texts[Math.min(noCount, texts.length - 1)];
+            };
+
+            return (
+                <div 
+                    className="min-h-screen flex flex-col items-center justify-center p-4 text-center bg-cover bg-center relative"
+                    style={{
+                        backgroundImage: `url('https://cdn.photoroom.com/v2/image-cache?path=gs://background-7ef44.appspot.com/backgrounds_v3/valentine_s_day/49_valentine_s_day.jpg')`
+                    }}
+                >      
+                    <div className="absolute inset-0 bg-blue-50/70 backdrop-blur-sm"></div>
+                    <div className="max-w-md mx-auto relative z-10">
+                        {!answer ? (
+                            <>
+                                <div className="mb-4 animate-bounce">
+                                    <Heart className="w-20 h-20 text-pink-500 mx-auto" />
+                                </div>
+                                <div className="mb-8">
+                                    <Stars className="w-8 h-8 text-blue-400 inline-block" />
+                                    <span className="text-2xl font-bold text-pink-500 mx-2">Hi, Abbi</span>
+                                    <Stars className="w-8 h-8 text-blue-400 inline-block" />
+                                </div>
+                                <h1 className="text-4xl font-bold text-blue-600 mb-8 drop-shadow-lg">
+                                    Will you be my Valentine?
+                                </h1>
+                                <div className="flex flex-col items-center gap-4">
+                                    <button
+                                        onClick={() => setAnswer(true)}
+                                        className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-8 rounded-full text-xl transition-all transform hover:scale-110 shadow-lg w-40"
+                                    >
+                                        Yes ❤️
+                                    </button>
+                                    <div className="relative">
+                                        <button
+                                            onMouseEnter={handleNoHover}
+                                            onClick={handleNoHover}
+                                            className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-xl absolute transition-all shadow-lg w-40"
+                                            style={{
+                                                top: `${noButtonPosition.top}px`,
+                                                left: `${noButtonPosition.left}px`
+                                            }}
+                                        >
+                                            {getNoButtonText()}
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="space-y-4">
+                                <div className="flex justify-center space-x-2">
+                                    {[...Array(6)].map((_, i) => (
+                                        <Heart
+                                            key={i}
+                                            className="w-12 h-12 text-pink-500 animate-bounce"
+                                            style={{ animationDelay: `${i * 0.1}s` }}
+                                        />
+                                    ))}
+                                </div>
+                                <h2 className="text-4xl font-bold text-pink-500 drop-shadow-lg">
+                                    Perfect ❤️
+                                </h2>
+                                <p className="text-xl text-blue-600">
+                                    Looking forward to taking you on a date when you visit!
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<ValentineProposal />, document.getElementById('root'));
+    </script>
+</body>
+</html>
